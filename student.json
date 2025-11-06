@@ -1,0 +1,12 @@
+{
+  "name": "student",
+  "daily_effort_budget_hours": 5.0,
+  "max_big_focus": 3,
+  "max_stress_load": 0.9,
+  "weights": {
+    "importance": 0.4,
+    "urgency": 0.3,
+    "effort": 0.2,
+    "deadline": 0.1
+  }
+}

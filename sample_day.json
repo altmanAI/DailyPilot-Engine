@@ -1,0 +1,32 @@
+[
+  {
+    "id": "call_grandma",
+    "title": "Call grandma",
+    "description": "Check in and say hello.",
+    "importance": 5,
+    "urgency": 4,
+    "effort_estimate": 0.5,
+    "stress_impact": "LOW",
+    "category": "family"
+  },
+  {
+    "id": "finish_report",
+    "title": "Finish client report",
+    "description": "Due soon and important for income.",
+    "importance": 5,
+    "urgency": 5,
+    "effort_estimate": 2.0,
+    "stress_impact": "MEDIUM",
+    "category": "work"
+  },
+  {
+    "id": "scroll_social",
+    "title": "Scroll social media",
+    "description": "Habit, not really necessary.",
+    "importance": 1,
+    "urgency": 1,
+    "effort_estimate": 1.0,
+    "stress_impact": "LOW",
+    "category": "leisure"
+  }
+]

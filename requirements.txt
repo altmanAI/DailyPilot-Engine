@@ -1,0 +1,2 @@
+# DailyPilot-Engine has no hard third-party dependencies for the core engine.
+# Standard library only. Add libraries here if you extend the project.

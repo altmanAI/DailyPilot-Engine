@@ -1,0 +1,12 @@
+{
+  "name": "founder",
+  "daily_effort_budget_hours": 6.0,
+  "max_big_focus": 3,
+  "max_stress_load": 1.0,
+  "weights": {
+    "importance": 0.5,
+    "urgency": 0.25,
+    "effort": 0.15,
+    "deadline": 0.1
+  }
+}
