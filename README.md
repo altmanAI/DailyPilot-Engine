@@ -1,22 +1,22 @@
 # DailyPilot-Engine
 
-DailyPilot-Engine is the prioritization engine behind **DailyPilot by AltmanAI**.  
-It turns messy task lists and shifting schedules into a focused, realistic daily plan that feels calm instead of overwhelming.
+DailyPilot-Engine is the prioritization core of **DailyPilot by AltmanAI (Altman Family Group, LLC)**.  
+It takes messy tasks and shifting schedules and turns them into a realistic, focused daily plan that feels calm instead of overwhelming.
 
 ---
 
 ## What it does
 
-- Ranks tasks using importance, urgency, time, and effort
-- Builds a small set of “Today’s Focus” tasks (e.g. your Big 3)
+- Scores tasks by importance, urgency, effort, and timing
+- Builds a small “Today’s Focus” list (your Big 3–5)
 - Suggests optional supporting tasks and safely parks the rest
-- Produces explainable output so you can see *why* something is recommended
+- Produces explainable output so you can see *why* each task was chosen
 
-DailyPilot-Engine is designed to be:
+DailyPilot-Engine is:
 
-- **Human-centered** – Supports real life (energy, constraints, context), not just productivity metrics  
+- **Human-centered** – Optimized for real life, not just more checkmarks  
 - **Deterministic** – Same inputs → same outputs (easy to test and debug)  
-- **Embeddable** – Can be used from mobile, web, or backend services  
+- **Embeddable** – Usable from mobile, web, or backend services  
 
 ---
 
@@ -24,47 +24,37 @@ DailyPilot-Engine is designed to be:
 
 **Task**
 
-Each task can include:
+Typical fields:
 
-- Title and description  
-- Importance and urgency scores  
-- Effort estimate (how long / how hard)  
-- Optional due date or time window  
+- `title`, `description`
+- `importance`, `urgency`
+- `effort_estimate`
+- optional `due_date` or `time_window`
 
 **Profile**
 
-Profiles tune how the engine behaves for different people and seasons of life:
-
-- Founders / creators  
-- Shift workers  
-- Students / learners  
-
-A profile defines weightings (importance vs urgency etc.) and time budget rules for the day.
+Profiles tune the behavior for different people and seasons of life (founders, shift workers, students, etc.) by changing weights and time budgets.
 
 **Plan**
 
 Engine output is a simple structure:
 
 - `big_focus` – the few tasks that really matter today  
-- `support_tasks` – helpful if you have time and energy  
-- `parked_tasks` – everything else, explicitly deferred (not forgotten)
+- `support_tasks` – helpful if time/energy allow  
+- `parked_tasks` – explicitly deferred, not forgotten  
 
 ---
 
-## Example flow (conceptual)
+## Example flow
 
-1. Collect tasks (from app, calendar, or a simple JSON file).
-2. Choose a profile (e.g. `founder`, `double_shift_worker`, or `student`).
-3. Run the engine to:
-   - score and sort tasks
-   - build a plan for today
-4. Present the plan in your app’s UI and let the human make the final call.
+1. Collect tasks from your app, calendar, or a JSON file.
+2. Choose a profile (e.g. `founder`, `double_shift_worker`, `student`).
+3. Run the engine to score, sort, and build a plan.
+4. Show the plan in your UI and let the human make the final call.
 
 ---
 
 ## Quick start (developer preview)
-
-> Language and tooling here are examples; adapt to your stack.
 
 ```bash
 git clone https://github.com/altmanAI/DailyPilot-Engine.git
