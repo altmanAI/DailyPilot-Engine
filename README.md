@@ -42,20 +42,25 @@ The current scoring method is an inspectable heuristic. A high-stress task may b
 
 ```text
 .
-├── models.py                 # Task, profile, score, plan, and run-log data models
-├── scoring.py                # Transparent scoring heuristic and breakdown
-├── selectors.py              # Effort-budgeted plan construction
+├── engine/
+│   ├── __init__.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── models.py         # Task, profile, score, plan, and run-log models
+│   │   ├── scoring.py        # Transparent scoring heuristic and breakdown
+│   │   └── selectors.py      # Effort-budgeted plan construction
+│   └── profiles/
+│       ├── student.json
+│       ├── worker_double_shift.json
+│       └── founder.json
 ├── dailypilot_cli.py         # Local command-line harness
 ├── sample_day.json           # Example task input
-├── student.json              # Example profile
-├── worker_double_shift.json  # Example profile
-├── founder.json              # Example profile
 ├── test_scoring.py           # Scoring behavior tests
 ├── test_selectors.py         # Plan-selection behavior tests
 └── test_profiles.py          # Profile integrity tests
 ```
 
-The repository currently uses a deliberately small root-module layout. Imports, tests, CLI paths, and documentation must remain consistent with that layout unless a reviewed packaging migration changes them together.
+The package layout prevents collisions with Python standard-library modules and provides one consistent import path for code, tests, CLI use, and documentation.
 
 ## Quick start
 
@@ -86,6 +91,18 @@ The task file must be a JSON array. Each task requires `id` and `title`; other s
 ```
 
 `due_date`, when supplied through JSON, must use `YYYY-MM-DD`.
+
+## Python usage
+
+```python
+from engine.core import ProfileConfig, Task, build_daily_plan, score_tasks
+
+profile = ProfileConfig(name="example", daily_effort_budget_hours=3.0)
+tasks = [Task(id="prepare_demo", title="Prepare product demo", importance=5)]
+
+scored = score_tasks(tasks, profile)
+plan = build_daily_plan(scored, profile)
+```
 
 ## Run tests
 
