@@ -1,17 +1,17 @@
 # DailyPilot Engine Architecture
 
-## Current structure
+## Package structure
 
-The reference engine intentionally uses a small root-module architecture:
+The reference engine uses an explicit Python package:
 
-- `models.py` — task, profile, scored-task, plan, and run-log data models;
-- `scoring.py` — transparent factor normalization, weighting, deadline treatment, and stress penalty;
-- `selectors.py` — effort-budgeted plan construction;
+- `engine.core.models` — task, profile, scored-task, plan, and run-log data models;
+- `engine.core.scoring` — transparent factor normalization, weighting, deadline treatment, and stress penalty;
+- `engine.core.selectors` — effort-budgeted plan construction;
+- `engine.profiles` — version-controlled example profile JSON files;
 - `dailypilot_cli.py` — local JSON input, profile loading, output display, and run logging;
-- root-level profile JSON files — example configuration for different contexts;
 - root-level test files — behavior and integrity evidence.
 
-This layout is the current source of truth. A future packaging migration must update implementation imports, tests, CLI paths, documentation, and release instructions in the same reviewed change.
+The package boundary avoids collisions with Python standard-library modules and provides one import path for tests, CLI use, and integrations.
 
 ## Data flow
 
@@ -83,5 +83,7 @@ The current engine does not model:
 - accessibility accommodations;
 - emotional, medical, financial, or legal consequences;
 - uncertainty in user-entered importance, urgency, effort, or stress values.
+
+`ProfileConfig.max_stress_load` is currently recorded but not enforced by the plan selector. It must not be represented as an active constraint until implementation and tests prove that behavior.
 
 These are explicit engineering boundaries, not future capability claims.
