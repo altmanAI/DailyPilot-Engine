@@ -1,21 +1,25 @@
 # DailyPilot Engine Python Reference
 
-## Import the current modules
+## Import the core interface
 
 ```python
-from models import ProfileConfig, Task
-from scoring import score_tasks
-from selectors import build_daily_plan
+from engine.core import ProfileConfig, Task, build_daily_plan, score_tasks
 ```
 
-The repository currently uses root-level Python modules. This is a reference interface, not a stability guarantee for a published package. A future packaging migration must be versioned and documented as a potentially breaking change.
+Direct module imports are also available:
+
+```python
+from engine.core.models import ProfileConfig, Task
+from engine.core.scoring import score_tasks
+from engine.core.selectors import build_daily_plan
+```
+
+This is a reference interface at version `0.1.0`, not a guarantee of long-term package compatibility. Breaking changes must be versioned and documented.
 
 ## Minimal example
 
 ```python
-from models import ProfileConfig, Task
-from scoring import score_tasks
-from selectors import build_daily_plan
+from engine.core import ProfileConfig, Task, build_daily_plan, score_tasks
 
 profile = ProfileConfig(
     name="example",
@@ -92,14 +96,14 @@ Contains the original task, final score, and factor breakdown.
 
 ### `Plan`
 
-Contains focus tasks, support tasks, parked tasks, a timestamp, summary, profile name, and engine version.
+Contains focus tasks, support tasks, parked tasks, a UTC timestamp, summary, profile name, and engine version.
 
 ## Integration requirements
 
 Before using this reference logic in a product:
 
 - validate all untrusted input;
-- document model and configuration versions;
+- document code and configuration versions;
 - preserve score explanations;
 - provide human correction and override;
 - add privacy, authentication, authorization, abuse, and incident controls appropriate to the product;
