@@ -1,5 +1,5 @@
-from models import ProfileConfig, ScoredTask, Task
-from selectors import build_daily_plan
+from engine.core.models import ProfileConfig, ScoredTask, Task
+from engine.core.selectors import build_daily_plan
 
 
 def _scored(task_id: str, effort: float, score: float) -> ScoredTask:
