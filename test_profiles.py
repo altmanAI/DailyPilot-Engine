@@ -10,8 +10,8 @@ PROFILE_NAMES = {
 
 
 def test_profiles_are_valid_json_objects():
-    base_dir = Path(__file__).resolve().parent
-    discovered = {path.name for path in base_dir.glob("*.json") if path.name != "sample_day.json"}
+    base_dir = Path(__file__).resolve().parent / "engine" / "profiles"
+    discovered = {path.name for path in base_dir.glob("*.json")}
 
     assert PROFILE_NAMES.issubset(discovered)
 
