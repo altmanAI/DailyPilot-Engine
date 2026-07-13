@@ -1,16 +1,16 @@
 from datetime import datetime
 from typing import List
-from .models import ScoredTask, ProfileConfig, Plan, Task
+
+from models import Plan, ProfileConfig, ScoredTask, Task
 
 
 def build_daily_plan(scored_tasks: List[ScoredTask], profile: ProfileConfig) -> Plan:
-    """Turn scored tasks into a daily plan.
+    """Build a bounded plan from tasks already ordered by score.
 
-    Strategy:
-    - Walk tasks in order of score.
-    - Add tasks to big_focus until we hit max_big_focus or run out.
-    - Add additional tasks as support if there is budget left.
-    - Anything that does not fit within the effort budget is parked.
+    The selector respects the configured effort budget and focus-task limit.
+    It does not understand calendar conflicts, dependencies, safety-critical
+    obligations, or consequences beyond the fields supplied by the caller.
+    A human should review the resulting plan before acting on it.
     """
 
     effort_budget = profile.daily_effort_budget_hours
@@ -20,7 +20,7 @@ def build_daily_plan(scored_tasks: List[ScoredTask], profile: ProfileConfig) -> 
     support_tasks: List[Task] = []
     parked_tasks: List[Task] = []
 
-    for idx, scored in enumerate(scored_tasks):
+    for scored in scored_tasks:
         task = scored.task
         task_effort = max(0.0, task.effort_estimate)
 
@@ -40,7 +40,7 @@ def build_daily_plan(scored_tasks: List[ScoredTask], profile: ProfileConfig) -> 
         f"Parked {len(parked_tasks)} task(s)."
     )
 
-    plan = Plan(
+    return Plan(
         profile_name=profile.name,
         timestamp=datetime.utcnow(),
         big_focus=big_focus,
@@ -48,4 +48,3 @@ def build_daily_plan(scored_tasks: List[ScoredTask], profile: ProfileConfig) -> 
         parked_tasks=parked_tasks,
         decision_summary=summary,
     )
-    return plan
