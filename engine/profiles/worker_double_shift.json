@@ -1,0 +1,12 @@
+{
+  "name": "worker_double_shift",
+  "daily_effort_budget_hours": 4.5,
+  "max_big_focus": 3,
+  "max_stress_load": 0.8,
+  "weights": {
+    "importance": 0.35,
+    "urgency": 0.35,
+    "effort": 0.2,
+    "deadline": 0.1
+  }
+}
