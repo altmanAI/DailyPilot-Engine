@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
-from models import ProfileConfig, Task
-from scoring import score_tasks
+from engine.core.models import ProfileConfig, Task
+from engine.core.scoring import score_tasks
 
 
 def test_higher_importance_scores_higher():
