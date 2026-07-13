@@ -1,12 +1,26 @@
 import json
-import os
+from pathlib import Path
 
 
-def test_profiles_are_valid_json():
-    base_dir = os.path.join(os.path.dirname(__file__), "..", "engine", "profiles")
-    for name in os.listdir(base_dir):
-        if not name.endswith(".json"):
-            continue
-        path = os.path.join(base_dir, name)
-        with open(path, "r", encoding="utf-8") as f:
-            json.load(f)
+PROFILE_NAMES = {
+    "student.json",
+    "worker_double_shift.json",
+    "founder.json",
+}
+
+
+def test_profiles_are_valid_json_objects():
+    base_dir = Path(__file__).resolve().parent / "engine" / "profiles"
+    discovered = {path.name for path in base_dir.glob("*.json")}
+
+    assert PROFILE_NAMES.issubset(discovered)
+
+    for name in PROFILE_NAMES:
+        path = base_dir / name
+        with path.open("r", encoding="utf-8") as profile_file:
+            profile = json.load(profile_file)
+
+        assert isinstance(profile, dict)
+        assert profile.get("name")
+        assert profile.get("daily_effort_budget_hours", 0) > 0
+        assert profile.get("max_big_focus", 0) >= 1

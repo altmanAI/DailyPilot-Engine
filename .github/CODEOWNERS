@@ -1,0 +1,15 @@
+# Default accountable owner
+* @altmanAI
+
+# Human-first decision logic, data contracts, and profiles
+/engine/ @altmanAI
+/dailypilot_cli.py @altmanAI
+
+# Tests, security, documentation, and automation
+/test_*.py @altmanAI
+/sample_day.json @altmanAI
+/SECURITY.md @altmanAI
+/README.md @altmanAI
+/architecture.md @altmanAI
+/api.md @altmanAI
+/.github/ @altmanAI

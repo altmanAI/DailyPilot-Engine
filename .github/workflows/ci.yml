@@ -1,0 +1,49 @@
+name: DailyPilot Engine CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dailypilot-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Compile, test, and smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository without external actions
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init .
+          git remote add origin "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git"
+          git fetch --no-tags --depth=1 origin "${GITHUB_REF}"
+          git checkout --detach FETCH_HEAD
+
+      - name: Report Python runtime
+        run: python3 --version
+
+      - name: Create isolated test environment
+        run: python3 -m venv .venv
+
+      - name: Install test runner
+        run: .venv/bin/python -m pip install --disable-pip-version-check "pytest>=8,<10"
+
+      - name: Compile Python sources
+        run: .venv/bin/python -m compileall -q engine dailypilot_cli.py test_*.py
+
+      - name: Run tests
+        run: .venv/bin/python -m pytest -q
+
+      - name: Run documented CLI smoke test
+        run: .venv/bin/python dailypilot_cli.py sample_day.json --profile worker_double_shift

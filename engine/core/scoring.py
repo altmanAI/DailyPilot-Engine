@@ -1,6 +1,7 @@
 from datetime import date
-from typing import List, Dict
-from .models import Task, ProfileConfig, ScoredTask
+from typing import Dict, List
+
+from .models import ProfileConfig, ScoredTask, Task
 
 
 def _normalize(value: float, min_value: float, max_value: float) -> float:
@@ -20,9 +21,11 @@ def _stress_penalty(stress_impact: str) -> float:
 
 
 def score_tasks(tasks: List[Task], profile: ProfileConfig) -> List[ScoredTask]:
-    """Score tasks for a given profile.
+    """Score tasks using an inspectable heuristic for a given profile.
 
-    This is a simple, transparent scoring model meant as a solid starting point.
+    The result is decision support, not an autonomous or high-stakes decision.
+    Callers remain responsible for reviewing deadlines, safety constraints,
+    accessibility needs, and other context the heuristic does not represent.
     """
 
     weights: Dict[str, float] = {
@@ -73,5 +76,5 @@ def score_tasks(tasks: List[Task], profile: ProfileConfig) -> List[ScoredTask]:
 
         scored.append(ScoredTask(task=task, score=final_score, breakdown=breakdown))
 
-    scored.sort(key=lambda st: st.score, reverse=True)
+    scored.sort(key=lambda scored_task: scored_task.score, reverse=True)
     return scored
