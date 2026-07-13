@@ -4,15 +4,16 @@ from datetime import date, timezone
 from pathlib import Path
 from typing import List
 
-from models import ProfileConfig, RunLog, Task
-from scoring import score_tasks
-from selectors import build_daily_plan
+from engine.core.models import ProfileConfig, RunLog, Task
+from engine.core.scoring import score_tasks
+from engine.core.selectors import build_daily_plan
 
 BASE_DIR = Path(__file__).resolve().parent
+PROFILE_DIR = BASE_DIR / "engine" / "profiles"
 
 
 def load_profile(profile_name: str) -> ProfileConfig:
-    path = BASE_DIR / f"{profile_name}.json"
+    path = PROFILE_DIR / f"{profile_name}.json"
     if not path.exists():
         raise SystemExit(f"Profile not found: {profile_name} (expected {path})")
 
@@ -97,7 +98,7 @@ def main() -> None:
     parser.add_argument(
         "--profile",
         default="worker_double_shift",
-        help="Profile JSON name without extension (default: worker_double_shift)",
+        help="Profile name (default: worker_double_shift)",
     )
     args = parser.parse_args()
 
